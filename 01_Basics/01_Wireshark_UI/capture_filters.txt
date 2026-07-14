@@ -1,0 +1,61 @@
+## This file contains the some examples of the Filters and the Foundational logic.
+
+BASIC PROTOCOLS=>
+    tcp = Transmission Controle Protocol
+    udp = User Datagram Protocol
+    icmp= Internet Controle and manage protocol
+
+    1.TCP 
+        Transmission controle protocol is a reliable protocol that supports the end to end complete data 
+    delivery.It supports the reliable and end to end transmission so the important data get transmitted over the 
+    tcp.
+
+    tcp port:80/443 is used for the HTTP/HTTPS 
+
+    2.UDP
+        User datagram protocol is a protocol that is an unreliable data delivery which means that just 
+    focus on the delivery dosen't matter that it sends the correct packets or not.
+
+    udp port:53 is used for the DNS 
+
+PORT BASED=>
+    Ports are the instances on the end devices that establishes the end to end delivery of the diffent services
+on the same end devices over the individual port for each service.
+
+    Ports=>
+        21  :File transport protocol (FTP) service
+        22  :Secure shell (ssh) service
+        25  :Simple mail transport protocol
+        53  :Domain name system 
+        80  :Hyper text transport protocol(http)
+        110 :Post office protocol(POP)
+        143 :Internet message Access protocol(imap)
+        443 :Hyper text transfer protocol secure(https)
+
+    filter eg:
+        tcp.port == 80
+    These are the some of the most important types of the protocols that are used mostly in the industry.
+
+Types of ports:
+    0-1023     :these are the system ports that are used by the system for the communication.
+    1024-49151 :User ports, which can the user can use for his purpose 
+    49152-65535:These are the private ports which are used to test the services by the IPS providing companies.
+
+HOST ISOLATION BASED RULES :
+    host 192.168.1.100 captures traffic from/to that IP
+    src host X / dst host Y for direction-specific
+    net 192.168.1.0/24 captures entire subnet
+    ether host MAC for MAC-based capture
+    not host 127.0.0.1 excludes localhost
+
+SOC SCENARIOS :
+    SSH from external: tcp port 22 and not net 192.168.0.0/16
+    Exclude internal noise: not (udp port 67 or udp port 68 or udp port 5353)
+    Web traffic only: (tcp port 80 or tcp port 443) and host 192.168.1.50
+    Clean lab capture: not (arp or dhcp or icmp) and (tcp or udp)
+
+ADVANCED :
+    ip (IPv4 only) / ipv6 (IPv6 only)
+    greater 1500 / less 100 (packet size filtering)
+    tcp[tcpflags] & tcp-syn != 0 (SYN flag packets)
+    tcp[tcpflags] == 0 (NULL scan detection)
